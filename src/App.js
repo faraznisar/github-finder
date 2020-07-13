@@ -3,6 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 
 import Navbar from "./components/layout/Navbar";
+import Alert from "./components/layout/Alert";
 import Users from "./components/users/Users";
 import Search from "./components/users/Search";
 
@@ -12,6 +13,7 @@ class App extends Component {
   state = {
     users: [],
     loading: false,
+    alert: null,
   };
 
   searchUsers = async (text) => {
@@ -22,25 +24,28 @@ class App extends Component {
     this.setState({ users: res.data.items, loading: false });
   };
 
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg, type } });
+    setTimeout(() => {
+      this.setState({ alert: null });
+    }, 4000);
+  };
   clearUsers = () => {
     this.setState({ users: [] });
   };
 
-  // static propTypes = {
-  //   searchUsers: PropTypes.func.isRequired,
-  //   clearUsers: PropTypes.func.isRequired,
-  //   showClear: PropTypes.func.isRequired,
-  // };
   render() {
     const { users, loading } = this.state;
     return (
       <div className="App">
         <Navbar />
         <div className="container">
+          <Alert alert={this.state.alert} />
           <Search
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}
             showClear={users.length > 0 ? true : null}
+            setAlert={this.setAlert}
           />
           <Users users={users} loading={loading} />
         </div>
