@@ -8,7 +8,7 @@ export class Search extends Component {
   static propTypes = {
     searchUsers: PropTypes.func.isRequired,
     clearUsers: PropTypes.func.isRequired,
-    showClear: PropTypes.func.isRequired,
+    // showClear: PropTypes.func.isRequired,kkk
     setAlert: PropTypes.func.isRequired,
   };
 
